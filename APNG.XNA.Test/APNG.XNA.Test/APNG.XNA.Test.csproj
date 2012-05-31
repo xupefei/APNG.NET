@@ -114,6 +114,9 @@
     <Compile Include="Game1.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="monkey.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="firefox.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

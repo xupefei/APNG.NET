@@ -42,7 +42,7 @@ namespace APNGTest
             // Create a new SpriteBatch, which can be used to draw textures.
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
 
-            this.apng = new APNGHelper.APNGHelper(this, @"firefox.png");
+            this.apng = new APNGHelper.APNGHelper(this, @"monkey.png");
         }
 
         /// <summary>

@@ -20,14 +20,27 @@ namespace APNGTest.APNGHelper
 
         internal APNGFrame(Game game, Frame frame)
         {
-            this.X = (int)frame.fcTLChunk.XOffset;
-            this.Y = (int)frame.fcTLChunk.YOffset;
-            this.Width = (int)frame.fcTLChunk.Width;
-            this.Height = (int)frame.fcTLChunk.Height;
-            this.BlendOp = frame.fcTLChunk.BlendOp;
-            this.DisposeOp = frame.fcTLChunk.DisposeOp;
-            this.DelayTime = new TimeSpan(
-                TimeSpan.TicksPerSecond * frame.fcTLChunk.DelayNum / frame.fcTLChunk.DelayDen);
+            if (frame.fcTLChunk != null)
+            {
+                this.X = (int)frame.fcTLChunk.XOffset;
+                this.Y = (int)frame.fcTLChunk.YOffset;
+                this.Width = (int)frame.fcTLChunk.Width;
+                this.Height = (int)frame.fcTLChunk.Height;
+                this.BlendOp = frame.fcTLChunk.BlendOp;
+                this.DisposeOp = frame.fcTLChunk.DisposeOp;
+                this.DelayTime = new TimeSpan(
+                    TimeSpan.TicksPerSecond * frame.fcTLChunk.DelayNum / frame.fcTLChunk.DelayDen);
+            }
+            else
+            {
+                this.X = 0;
+                this.Y = 0;
+                this.Width = frame.IHDRChunk.Width;
+                this.Height = frame.IHDRChunk.Height;
+                this.BlendOp = BlendOps.APNGBlendOpSource;
+                this.DisposeOp = DisposeOps.APNGDisposeOpNone;
+                this.DelayTime = TimeSpan.Zero;
+            }
 
             // frame.GetStream() is not seekable, so we build a new MemoryStream.
             this.FrameTexture = Texture2D.FromStream(
