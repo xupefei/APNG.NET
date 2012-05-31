@@ -1,6 +1,8 @@
 using System;
 using System.IO;
+
 using APNG;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
@@ -9,14 +11,20 @@ namespace APNGTest.APNGHelper
 {
     internal struct APNGFrame
     {
+        #region Constants and Fields
+
+        internal BlendOps BlendOp;
+        internal TimeSpan DelayTime;
+        internal DisposeOps DisposeOp;
+        internal Texture2D FrameTexture;
+        internal int Height;
+        internal int Width;
         internal int X;
         internal int Y;
-        internal int Width;
-        internal int Height;
-        internal BlendOps BlendOp;
-        internal DisposeOps DisposeOp;
-        internal TimeSpan DelayTime;
-        internal Texture2D FrameTexture;
+
+        #endregion Constants and Fields
+
+        #region Constructors and Destructors
 
         internal APNGFrame(Game game, Frame frame)
         {
@@ -48,6 +56,10 @@ namespace APNGTest.APNGHelper
             MultiplyAlpha(this.FrameTexture);
         }
 
+        #endregion Constructors and Destructors
+
+        #region Methods
+
         private static void MultiplyAlpha(Texture2D ret)
         {
             var data = new Byte4[ret.Width * ret.Height];
@@ -69,5 +81,7 @@ namespace APNGTest.APNGHelper
 
             ret.SetData(data);
         }
+
+        #endregion Methods
     }
 }
