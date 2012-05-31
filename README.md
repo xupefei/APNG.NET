@@ -17,7 +17,7 @@ I've been searching for days looking for an simple, easy-to-use animation contro
 ----------
 ##PNG and APNG specification support status
 
-*   For simple PNG, All trunks but `IHDR`, `IDAT` and `IEND` are **unsupported**, and will be **ignored** during the parsing.
+*   For simple PNG, All chunks but `IHDR`, `IDAT` and `IEND` are **unsupported**, and will be **ignored** during the parsing.
 *   For APNG, the library **can only** parse `IHDR`, `acTL`, `fcTL`, `IDAT`, `fdAT` and `IEND` chunks.
 *   Multiply frame size is **supported**. This means you can reduce the file size by using *Differential Frame*. (use [APNG Anime Maker][3])
 *   All `DISPOSE_OP` and `BLEND_OP` is **supported**.
