@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using APNG;
-
+using LibAPNG;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace APNGTest.APNGHelper
+namespace LibAPNGTest.APNGHelper
 {
     public class APNGHelper
     {
@@ -30,18 +28,29 @@ namespace APNGTest.APNGHelper
         {
             this.game = game;
 
-            var image = new APNG.APNG(pngFile);
-            this.numPlays = (int)image.acTLChunk.NumPlays;
-            this.baseFrame = new APNGFrame(game, image.DefaultImage);
+            var image = new APNG(pngFile);
+            numPlays = (int) image.acTLChunk.NumPlays;
+            baseFrame = new APNGFrame(game, image.DefaultImage);
 
-            foreach (Frame frame in image.Frames)
+            if (image.IsSimplePNG)
             {
-                this.frameList.Add(new APNGFrame(game, frame));
+                CurrentFrame = baseFrame.FrameTexture;
             }
+            else
+            {
+                numPlays = (int) image.acTLChunk.NumPlays;
 
-            this.sb = new SpriteBatch(this.game.GraphicsDevice);
+                foreach (Frame frame in image.Frames)
+                {
+                    frameList.Add(new APNGFrame(this.game, frame));
+                }
 
-            this.RenderEachFrame();
+                sb = new SpriteBatch(this.game.GraphicsDevice);
+
+                RenderEachFrame();
+
+                CurrentFrame = renderedTextureList[0];
+            }
         }
 
         #endregion Constructors and Destructors
@@ -56,31 +65,31 @@ namespace APNGTest.APNGHelper
 
         public void Update(GameTime gameTime)
         {
-            if (this.CurrentFrame == null)
+            if (CurrentFrame == null)
             {
-                this.CurrentFrame = this.baseFrame.FrameTexture;
+                CurrentFrame = baseFrame.FrameTexture;
             }
 
-            if (this.numPlays != 0 && this.alreadyPlays >= this.numPlays)
+            if (numPlays != 0 && alreadyPlays >= numPlays)
             {
-                this.CurrentFrame = this.renderedTextureList[0];
+                CurrentFrame = renderedTextureList[0];
             }
 
-            if (this.alreadyWaitTime > this.frameList[this.currentPlayedIndex].DelayTime)
+            if (alreadyWaitTime > frameList[currentPlayedIndex].DelayTime)
             {
-                this.currentPlayedIndex = this.currentPlayedIndex < this.renderedTextureList.Count - 1
-                                              ? this.currentPlayedIndex + 1
-                                              : 0;
+                currentPlayedIndex = currentPlayedIndex < renderedTextureList.Count - 1
+                                         ? currentPlayedIndex + 1
+                                         : 0;
 
-                this.CurrentFrame = this.renderedTextureList[this.currentPlayedIndex];
+                CurrentFrame = renderedTextureList[currentPlayedIndex];
 
-                this.alreadyWaitTime = TimeSpan.Zero;
+                alreadyWaitTime = TimeSpan.Zero;
 
-                this.alreadyPlays++;
+                alreadyPlays++;
             }
             else
             {
-                this.alreadyWaitTime += gameTime.ElapsedGameTime;
+                alreadyWaitTime += gameTime.ElapsedGameTime;
             }
         }
 
@@ -90,13 +99,13 @@ namespace APNGTest.APNGHelper
 
         private void RenderEachFrame()
         {
-            for (int crtIndex = 0; crtIndex < this.frameList.Count; crtIndex++)
+            for (int crtIndex = 0; crtIndex < frameList.Count; crtIndex++)
             {
                 var currentTexture = new RenderTarget2D(
-                    this.game.GraphicsDevice, this.baseFrame.Width, this.baseFrame.Height);
+                    game.GraphicsDevice, baseFrame.Width, baseFrame.Height);
 
-                this.game.GraphicsDevice.SetRenderTarget(currentTexture);
-                this.game.GraphicsDevice.Clear(Color.Transparent);
+                game.GraphicsDevice.SetRenderTarget(currentTexture);
+                game.GraphicsDevice.Clear(Color.Transparent);
 
                 // if this is the first frame, just draw.
                 if (crtIndex == 0)
@@ -105,31 +114,31 @@ namespace APNGTest.APNGHelper
                 }
 
                 // Restore previous texture
-                this.sb.Begin();
-                this.sb.Draw(this.renderedTextureList[crtIndex - 1], Vector2.Zero, Color.White);
-                this.sb.End();
+                sb.Begin();
+                sb.Draw(renderedTextureList[crtIndex - 1], Vector2.Zero, Color.White);
+                sb.End();
 
-                APNGFrame crtFrame = this.frameList[crtIndex - 1];
+                APNGFrame crtFrame = frameList[crtIndex - 1];
 
                 switch (crtFrame.DisposeOp)
                 {
-                    // Do nothing.
+                        // Do nothing.
                     case DisposeOps.APNGDisposeOpNone:
                         break;
 
-                    // Set current Rectangle to transparent.
+                        // Set current Rectangle to transparent.
                     case DisposeOps.APNGDisposeOpBackground:
-                    LABEL_APNG_DISPOSE_OP_BACKGROUND:
-                        var t2 = new Texture2D(this.game.GraphicsDevice, 1, 1);
-                        this.sb.Begin(SpriteSortMode.Deferred, BlendState.Opaque);
-                        this.sb.Draw(
+                        LABEL_APNG_DISPOSE_OP_BACKGROUND:
+                        var t2 = new Texture2D(game.GraphicsDevice, 1, 1);
+                        sb.Begin(SpriteSortMode.Deferred, BlendState.Opaque);
+                        sb.Draw(
                             t2,
                             new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
                             Color.White);
-                        this.sb.End();
+                        sb.End();
                         break;
 
-                    // Rollback to previous frame.
+                        // Rollback to previous frame.
                     case DisposeOps.APNGDisposeOpPrevious:
                         // If the first `fcTL` chunk uses a `dispose_op` of APNG_DISPOSE_OP_PREVIOUS
                         // it should be treated as APNG_DISPOSE_OP_BACKGROUND.
@@ -138,59 +147,59 @@ namespace APNGTest.APNGHelper
                             goto LABEL_APNG_DISPOSE_OP_BACKGROUND;
                         }
 
-                        APNGFrame prevFrame = this.frameList[crtIndex - 2];
+                        APNGFrame prevFrame = frameList[crtIndex - 2];
 
-                        this.sb.Begin(SpriteSortMode.Deferred, BlendState.Opaque);
-                        this.sb.Draw(
+                        sb.Begin(SpriteSortMode.Deferred, BlendState.Opaque);
+                        sb.Draw(
                             prevFrame.FrameTexture,
                             new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
                             new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
                             Color.White);
-                        this.sb.End();
+                        sb.End();
                         break;
                 }
 
-            LABEL_DRAW_NEW_FRAME:
+                LABEL_DRAW_NEW_FRAME:
                 // Now let's look at the new frame.
                 if (crtIndex == 0)
                 {
-                    crtFrame = this.frameList[0];
+                    crtFrame = frameList[0];
                 }
                 else
                 {
-                    crtFrame = crtIndex < this.frameList.Count
-                                   ? this.frameList[crtIndex]
-                                   : this.frameList[0];
+                    crtFrame = crtIndex < frameList.Count
+                                   ? frameList[crtIndex]
+                                   : frameList[0];
                 }
 
                 switch (crtFrame.BlendOp)
                 {
-                    // Do not apply alpha
+                        // Do not apply alpha
                     case BlendOps.APNGBlendOpSource:
-                        this.sb.Begin(SpriteSortMode.Deferred, BlendState.Opaque);
-                        this.sb.Draw(
+                        sb.Begin(SpriteSortMode.Deferred, BlendState.Opaque);
+                        sb.Draw(
                             crtFrame.FrameTexture,
                             new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
                             Color.White);
-                        this.sb.End();
+                        sb.End();
                         break;
 
-                    // Apply alpha
+                        // Apply alpha
                     case BlendOps.APNGBlendOpOver:
-                        this.sb.Begin();
-                        this.sb.Draw(
+                        sb.Begin();
+                        sb.Draw(
                             crtFrame.FrameTexture,
                             new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
                             Color.White);
-                        this.sb.End();
+                        sb.End();
                         break;
                 }
 
-                this.renderedTextureList.Add(currentTexture);
+                renderedTextureList.Add(currentTexture);
             }
 
             // Okay it's all over now
-            this.game.GraphicsDevice.SetRenderTarget(null);
+            game.GraphicsDevice.SetRenderTarget(null);
         }
 
         #endregion Methods

@@ -1,13 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
-namespace APNG
+namespace LibAPNG
 {
     public class Chunk
     {
+        internal Chunk()
+        {
+            Length = 0;
+            ChunkType = String.Empty;
+            ChunkData = null;
+            Crc = 0;
+        }
+
+        internal Chunk(byte[] bytes)
+        {
+            var ms = new MemoryStream(bytes);
+            Length = Helper.ConvertEndian(ms.ReadUInt32());
+            ChunkType = Encoding.ASCII.GetString(ms.ReadBytes(4));
+            ChunkData = ms.ReadBytes((int) Length);
+            Crc = Helper.ConvertEndian(ms.ReadUInt32());
+
+            if (ms.Position != ms.Length)
+                throw new Exception("Chunk length not correct.");
+            if (Length != ChunkData.Length)
+                throw new Exception("Chunk data length not correct.");
+
+            ParseData(new MemoryStream(ChunkData));
+        }
+
+        internal Chunk(MemoryStream ms)
+        {
+            Length = Helper.ConvertEndian(ms.ReadUInt32());
+            ChunkType = Encoding.ASCII.GetString(ms.ReadBytes(4));
+            ChunkData = ms.ReadBytes((int) Length);
+            Crc = Helper.ConvertEndian(ms.ReadUInt32());
+
+            ParseData(new MemoryStream(ChunkData));
+        }
+
+        internal Chunk(Chunk chunk)
+        {
+            Length = chunk.Length;
+            ChunkType = chunk.ChunkType;
+            ChunkData = chunk.ChunkData;
+            Crc = chunk.Crc;
+
+            ParseData(new MemoryStream(ChunkData));
+        }
+
         public uint Length { get; set; }
 
         public string ChunkType { get; set; }
@@ -23,58 +65,14 @@ namespace APNG
         {
             get
             {
-                var ms = new MemoryStreamEx();
-                ms.WriteUInt32(Helper.ConvertEndian(this.Length));
-                ms.WriteBytes(Encoding.ASCII.GetBytes(this.ChunkType));
-                ms.WriteBytes(this.ChunkData);
-                ms.WriteUInt32(Helper.ConvertEndian(this.Crc));
+                var ms = new MemoryStream();
+                ms.WriteUInt32(Helper.ConvertEndian(Length));
+                ms.WriteBytes(Encoding.ASCII.GetBytes(ChunkType));
+                ms.WriteBytes(ChunkData);
+                ms.WriteUInt32(Helper.ConvertEndian(Crc));
 
                 return ms.ToArray();
             }
-        }
-
-        internal Chunk()
-        {
-            this.Length = 0;
-            this.ChunkType = String.Empty;
-            this.ChunkData = null;
-            this.Crc = 0;
-        }
-
-        internal Chunk(byte[] bytes)
-        {
-            var ms = new MemoryStreamEx(bytes);
-            this.Length = Helper.ConvertEndian(ms.ReadUInt32());
-            this.ChunkType = Encoding.ASCII.GetString(ms.ReadBytes(4));
-            this.ChunkData = ms.ReadBytes((int)this.Length);
-            this.Crc = Helper.ConvertEndian(ms.ReadUInt32());
-
-            if (ms.Position != ms.Length)
-                throw new Exception("Chunk length not correct.");
-            if (this.Length != this.ChunkData.Length)
-                throw new Exception("Chunk data length not correct.");
-
-            ParseData(new MemoryStreamEx(this.ChunkData));
-        }
-
-        internal Chunk(MemoryStreamEx ms)
-        {
-            this.Length = Helper.ConvertEndian(ms.ReadUInt32());
-            this.ChunkType = Encoding.ASCII.GetString(ms.ReadBytes(4));
-            this.ChunkData = ms.ReadBytes((int)this.Length);
-            this.Crc = Helper.ConvertEndian(ms.ReadUInt32());
-
-            ParseData(new MemoryStreamEx(this.ChunkData));
-        }
-
-        internal Chunk(Chunk chunk)
-        {
-            this.Length = chunk.Length;
-            this.ChunkType = chunk.ChunkType;
-            this.ChunkData = chunk.ChunkData;
-            this.Crc = chunk.Crc;
-
-            ParseData(new MemoryStreamEx(this.ChunkData));
         }
 
         /// <summary>
@@ -84,12 +82,12 @@ namespace APNG
         {
             Array.Copy(newData, 0, ChunkData, postion, newData.Length);
 
-            using (var msCrc = new MemoryStreamEx())
+            using (var msCrc = new MemoryStream())
             {
-                msCrc.WriteBytes(Encoding.ASCII.GetBytes(this.ChunkType));
-                msCrc.WriteBytes(this.ChunkData);
+                msCrc.WriteBytes(Encoding.ASCII.GetBytes(ChunkType));
+                msCrc.WriteBytes(ChunkData);
 
-                this.Crc = CrcHelper.Calculate(msCrc.ToArray());
+                Crc = CrcHelper.Calculate(msCrc.ToArray());
             }
         }
 
@@ -101,7 +99,7 @@ namespace APNG
             ModifyChunkData(postion, BitConverter.GetBytes(newData));
         }
 
-        protected virtual void ParseData(MemoryStreamEx ms)
+        protected virtual void ParseData(MemoryStream ms)
         {
         }
     }

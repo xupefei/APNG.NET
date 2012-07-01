@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 
-namespace APNG
+namespace LibAPNG
 {
     public class acTLChunk : Chunk
     {
-        public uint NumFrames { get; private set; }
-
-        public uint NumPlays { get; private set; }
-
         public acTLChunk(byte[] bytes)
             : base(bytes)
         {
         }
 
-        public acTLChunk(MemoryStreamEx ms)
+        public acTLChunk(MemoryStream ms)
             : base(ms)
         {
         }
@@ -26,10 +19,14 @@ namespace APNG
         {
         }
 
-        protected override void ParseData(MemoryStreamEx ms)
+        public uint NumFrames { get; private set; }
+
+        public uint NumPlays { get; private set; }
+
+        protected override void ParseData(MemoryStream ms)
         {
-            this.NumFrames = Helper.ConvertEndian(ms.ReadUInt32());
-            this.NumPlays = Helper.ConvertEndian(ms.ReadUInt32());
+            NumFrames = Helper.ConvertEndian(ms.ReadUInt32());
+            NumPlays = Helper.ConvertEndian(ms.ReadUInt32());
         }
     }
 }

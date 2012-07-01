@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 
-namespace APNG
+namespace LibAPNG
 {
     internal class fdATChunk : Chunk
     {
-        public uint SequenceNumber { get; private set; }
-
-        public byte[] FrameData { get; private set; }
-
         public fdATChunk(byte[] bytes)
             : base(bytes)
         {
         }
 
-        public fdATChunk(MemoryStreamEx ms)
+        public fdATChunk(MemoryStream ms)
             : base(ms)
         {
         }
@@ -26,28 +19,32 @@ namespace APNG
         {
         }
 
-        protected override void ParseData(MemoryStreamEx ms)
+        public uint SequenceNumber { get; private set; }
+
+        public byte[] FrameData { get; private set; }
+
+        protected override void ParseData(MemoryStream ms)
         {
-            this.SequenceNumber = Helper.ConvertEndian(ms.ReadUInt32());
-            this.FrameData = ms.ReadBytes((int)Length - 4);
+            SequenceNumber = Helper.ConvertEndian(ms.ReadUInt32());
+            FrameData = ms.ReadBytes((int) Length - 4);
         }
 
         public IDATChunk ToIDATChunk()
         {
             uint newCrc;
-            using (var msCrc = new MemoryStreamEx())
+            using (var msCrc = new MemoryStream())
             {
-                msCrc.WriteBytes(new[] { (byte)'I', (byte)'D', (byte)'A', (byte)'T' });
-                msCrc.WriteBytes(this.FrameData);
+                msCrc.WriteBytes(new[] {(byte) 'I', (byte) 'D', (byte) 'A', (byte) 'T'});
+                msCrc.WriteBytes(FrameData);
 
                 newCrc = CrcHelper.Calculate(msCrc.ToArray());
             }
 
-            using (var ms = new MemoryStreamEx())
+            using (var ms = new MemoryStream())
             {
-                ms.WriteUInt32(Helper.ConvertEndian(this.Length - 4));
-                ms.WriteBytes(new[] { (byte)'I', (byte)'D', (byte)'A', (byte)'T' });
-                ms.WriteBytes(this.FrameData);
+                ms.WriteUInt32(Helper.ConvertEndian(Length - 4));
+                ms.WriteBytes(new[] {(byte) 'I', (byte) 'D', (byte) 'A', (byte) 'T'});
+                ms.WriteBytes(FrameData);
                 ms.WriteUInt32(Helper.ConvertEndian(newCrc));
                 ms.Position = 0;
 

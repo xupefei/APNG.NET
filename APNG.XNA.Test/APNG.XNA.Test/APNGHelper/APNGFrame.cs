@@ -1,13 +1,11 @@
 using System;
 using System.IO;
-
-using APNG;
-
+using LibAPNG;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 
-namespace APNGTest.APNGHelper
+namespace LibAPNGTest.APNGHelper
 {
     internal struct APNGFrame
     {
@@ -30,30 +28,30 @@ namespace APNGTest.APNGHelper
         {
             if (frame.fcTLChunk != null)
             {
-                this.X = (int)frame.fcTLChunk.XOffset;
-                this.Y = (int)frame.fcTLChunk.YOffset;
-                this.Width = (int)frame.fcTLChunk.Width;
-                this.Height = (int)frame.fcTLChunk.Height;
-                this.BlendOp = frame.fcTLChunk.BlendOp;
-                this.DisposeOp = frame.fcTLChunk.DisposeOp;
-                this.DelayTime = new TimeSpan(
-                    TimeSpan.TicksPerSecond * frame.fcTLChunk.DelayNum / frame.fcTLChunk.DelayDen);
+                X = (int) frame.fcTLChunk.XOffset;
+                Y = (int) frame.fcTLChunk.YOffset;
+                Width = (int) frame.fcTLChunk.Width;
+                Height = (int) frame.fcTLChunk.Height;
+                BlendOp = frame.fcTLChunk.BlendOp;
+                DisposeOp = frame.fcTLChunk.DisposeOp;
+                DelayTime = new TimeSpan(
+                    TimeSpan.TicksPerSecond*frame.fcTLChunk.DelayNum/frame.fcTLChunk.DelayDen);
             }
             else
             {
-                this.X = 0;
-                this.Y = 0;
-                this.Width = frame.IHDRChunk.Width;
-                this.Height = frame.IHDRChunk.Height;
-                this.BlendOp = BlendOps.APNGBlendOpSource;
-                this.DisposeOp = DisposeOps.APNGDisposeOpNone;
-                this.DelayTime = TimeSpan.Zero;
+                X = 0;
+                Y = 0;
+                Width = frame.IHDRChunk.Width;
+                Height = frame.IHDRChunk.Height;
+                BlendOp = BlendOps.APNGBlendOpSource;
+                DisposeOp = DisposeOps.APNGDisposeOpNone;
+                DelayTime = TimeSpan.Zero;
             }
 
             // frame.GetStream() is not seekable, so we build a new MemoryStream.
-            this.FrameTexture = Texture2D.FromStream(
+            FrameTexture = Texture2D.FromStream(
                 game.GraphicsDevice, new MemoryStream(frame.GetStream().ToArray()));
-            MultiplyAlpha(this.FrameTexture);
+            MultiplyAlpha(FrameTexture);
         }
 
         #endregion Constructors and Destructors
@@ -62,19 +60,19 @@ namespace APNGTest.APNGHelper
 
         private static void MultiplyAlpha(Texture2D ret)
         {
-            var data = new Byte4[ret.Width * ret.Height];
+            var data = new Byte4[ret.Width*ret.Height];
 
             ret.GetData(data);
             for (int i = 0; i < data.Length; i++)
             {
                 Vector4 vec = data[i].ToVector4();
 
-                float alpha = vec.W / 255.0f;
-                var a = (int)(vec.W);
-                var r = (int)(alpha * vec.X);
-                var g = (int)(alpha * vec.Y);
-                var b = (int)(alpha * vec.Z);
-                var packed = (uint)((a << 24) + (b << 16) + (g << 8) + r);
+                float alpha = vec.W/255.0f;
+                var a = (int) (vec.W);
+                var r = (int) (alpha*vec.X);
+                var g = (int) (alpha*vec.Y);
+                var b = (int) (alpha*vec.Z);
+                var packed = (uint) ((a << 24) + (b << 16) + (g << 8) + r);
 
                 data[i].PackedValue = packed;
             }

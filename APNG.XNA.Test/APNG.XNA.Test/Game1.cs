@@ -2,22 +2,21 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace APNGTest
+namespace LibAPNGTest
 {
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-
         private APNGHelper.APNGHelper apng;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
 
         public Game1()
         {
-            this.graphics = new GraphicsDeviceManager(this);
-            this.Content.RootDirectory = "Content";
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
         }
 
         /// <summary>
@@ -40,9 +39,9 @@ namespace APNGTest
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
+            spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            this.apng = new APNGHelper.APNGHelper(this, @"monkey.png");
+            apng = new APNGHelper.APNGHelper(this, @"monkey.png");
         }
 
         /// <summary>
@@ -63,9 +62,9 @@ namespace APNGTest
         {
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+                Exit();
 
-            this.apng.Update(gameTime);
+            apng.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -76,10 +75,10 @@ namespace APNGTest
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            this.GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            spriteBatch.Draw(this.apng.CurrentFrame, new Vector2(40, 40), Color.White);
+            spriteBatch.Draw(apng.CurrentFrame, new Vector2(40, 40), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

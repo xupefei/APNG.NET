@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 
-namespace APNG
+namespace LibAPNG
 {
     public class IDATChunk : Chunk
     {
@@ -12,7 +9,7 @@ namespace APNG
         {
         }
 
-        public IDATChunk(MemoryStreamEx ms)
+        public IDATChunk(MemoryStream ms)
             : base(ms)
         {
         }

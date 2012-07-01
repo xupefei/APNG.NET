@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 
-namespace APNG
+namespace LibAPNG
 {
     public enum DisposeOps
     {
@@ -20,6 +17,21 @@ namespace APNG
 
     public class fcTLChunk : Chunk
     {
+        public fcTLChunk(byte[] bytes)
+            : base(bytes)
+        {
+        }
+
+        public fcTLChunk(MemoryStream ms)
+            : base(ms)
+        {
+        }
+
+        public fcTLChunk(Chunk chunk)
+            : base(chunk)
+        {
+        }
+
         /// <summary>
         /// Sequence number of the animation chunk, starting from 0
         /// </summary>
@@ -65,32 +77,17 @@ namespace APNG
         /// </summary>
         public BlendOps BlendOp { get; private set; }
 
-        public fcTLChunk(byte[] bytes)
-            : base(bytes)
+        protected override void ParseData(MemoryStream ms)
         {
-        }
-
-        public fcTLChunk(MemoryStreamEx ms)
-            : base(ms)
-        {
-        }
-
-        public fcTLChunk(Chunk chunk)
-            : base(chunk)
-        {
-        }
-
-        protected override void ParseData(MemoryStreamEx ms)
-        {
-            this.SequenceNumber = Helper.ConvertEndian(ms.ReadUInt32());
-            this.Width = Helper.ConvertEndian(ms.ReadUInt32());
-            this.Height = Helper.ConvertEndian(ms.ReadUInt32());
-            this.XOffset = Helper.ConvertEndian(ms.ReadUInt32());
-            this.YOffset = Helper.ConvertEndian(ms.ReadUInt32());
-            this.DelayNum = Helper.ConvertEndian(ms.ReadUInt16());
-            this.DelayDen = Helper.ConvertEndian(ms.ReadUInt16());
-            this.DisposeOp = (DisposeOps)ms.ReadByte();
-            this.BlendOp = (BlendOps)ms.ReadByte();
+            SequenceNumber = Helper.ConvertEndian(ms.ReadUInt32());
+            Width = Helper.ConvertEndian(ms.ReadUInt32());
+            Height = Helper.ConvertEndian(ms.ReadUInt32());
+            XOffset = Helper.ConvertEndian(ms.ReadUInt32());
+            YOffset = Helper.ConvertEndian(ms.ReadUInt32());
+            DelayNum = Helper.ConvertEndian(ms.ReadUInt16());
+            DelayDen = Helper.ConvertEndian(ms.ReadUInt16());
+            DisposeOp = (DisposeOps) ms.ReadByte();
+            BlendOp = (BlendOps) ms.ReadByte();
         }
     }
 }

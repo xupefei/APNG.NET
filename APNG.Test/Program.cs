@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
-namespace APNG.Test
+namespace LibAPNG.Test
 {
     internal class Program
     {
@@ -22,7 +19,7 @@ namespace APNG.Test
             if (!apng.DefaultImageIsAnimeated)
                 File.WriteAllBytes("0.png", apng.DefaultImage.GetStream().ToArray());
 
-            foreach (var frame in apng.Frames)
+            foreach (Frame frame in apng.Frames)
             {
                 File.WriteAllBytes(
                     frame.fcTLChunk.SequenceNumber.ToString() + ".png", frame.GetStream().ToArray());

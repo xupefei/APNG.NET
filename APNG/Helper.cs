@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace APNG
+namespace LibAPNG
 {
     internal class Helper
     {
@@ -12,7 +9,7 @@ namespace APNG
         /// </summary>
         internal static byte[] ConvertEndian(byte[] i)
         {
-            if (i.Length % 2 != 0) throw new Exception("byte array length must multiply of 2");
+            if (i.Length%2 != 0) throw new Exception("byte array length must multiply of 2");
 
             Array.Reverse(i);
 

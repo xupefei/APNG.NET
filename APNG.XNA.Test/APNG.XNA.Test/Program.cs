@@ -1,4 +1,4 @@
-namespace APNGTest
+namespace LibAPNGTest
 {
 #if WINDOWS || XBOX
 
@@ -9,7 +9,7 @@ namespace APNGTest
         /// </summary>
         private static void Main(string[] args)
         {
-            using (Game1 game = new Game1())
+            using (var game = new Game1())
             {
                 game.Run();
             }

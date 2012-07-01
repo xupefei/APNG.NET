@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.IO;
 
-using MemoryStream = APNG.MemoryStreamEx;
-
-namespace APNG
+namespace LibAPNG
 {
     /// <summary>
     /// Describe a single frame.
     /// </summary>
     public class Frame
     {
-        public static byte[] Signature = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
+        public static byte[] Signature = new byte[] {0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A};
 
         private List<IDATChunk> idatChunks = new List<IDATChunk>();
 
@@ -52,9 +47,9 @@ namespace APNG
         /// <summary>
         /// Gets the frame as PNG FileStream.
         /// </summary>
-        public MemoryStreamEx GetStream()
+        public MemoryStream GetStream()
         {
-            var ihdrChunk = new IHDRChunk(this.IHDRChunk);
+            var ihdrChunk = new IHDRChunk(IHDRChunk);
             if (fcTLChunk != null)
             {
                 // Fix frame size with fcTL data.
@@ -63,14 +58,14 @@ namespace APNG
             }
 
             // Write image data
-            using (var ms = new MemoryStreamEx())
+            using (var ms = new MemoryStream())
             {
                 ms.WriteBytes(Signature);
                 ms.WriteBytes(ihdrChunk.RawData);
 
-                foreach (var idatChunk in this.idatChunks)
+                foreach (IDATChunk idatChunk in idatChunks)
                     ms.WriteBytes(idatChunk.RawData);
-                ms.WriteBytes(this.IENDChunk.RawData);
+                ms.WriteBytes(IENDChunk.RawData);
 
                 ms.Position = 0;
                 return ms;
