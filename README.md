@@ -48,9 +48,9 @@ This repository is made up by 3 parts:
 [4]: http://en.wikipedia.org/wiki/Microsoft_XNA
 
 
-*If you want to have a binary version of the code, [click here to download it][0].*
+*If you want to have a binary version of the code, [click here][0].*
 
-[0]: http://sukima.me/diskdata/aya/APNG.NET.0.2.7z
+[0]: https://github.com/xupefei/APNG.NET/downloads
 
 To compile this project, you must have these components installed:
 
