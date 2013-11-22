@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
 
-[assembly: AssemblyTitle("LibAPNG.XNA.APNGTexture")]
+[assembly: AssemblyTitle("LibAPNG.XNA.APNGTextureProvider")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Paddy Xu")]
-[assembly: AssemblyProduct("LibAPNG.XNA.APNGTexture")]
+[assembly: AssemblyProduct("LibAPNG.XNA.APNGTextureProvider")]
 [assembly: AssemblyCopyright("Copyright © Paddy Xu 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

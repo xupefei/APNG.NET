@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace LibAPNG.XNA.APNGTexture
+namespace LibAPNG.XNA.APNGTextureProvider
 {
     public class APNGContentTypeReader : ContentTypeReader<APNGTexture>
     {

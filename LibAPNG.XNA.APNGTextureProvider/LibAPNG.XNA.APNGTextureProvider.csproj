@@ -7,8 +7,8 @@
     <ProjectGuid>{1AFB77F4-21AF-4830-82A1-95E9FB683AA6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LibAPNG.XNA.APNGTexture</RootNamespace>
-    <AssemblyName>LibAPNG.XNA.APNGTexture</AssemblyName>
+    <RootNamespace>LibAPNG.XNA.APNGTextureProvider</RootNamespace>
+    <AssemblyName>LibAPNG.XNA.APNGTextureProvider</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>

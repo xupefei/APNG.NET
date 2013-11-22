@@ -16,7 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibAPNG.XNA.APNGPipelineExtension", "LibAPNG.XNA.APNGPipelineExtension\LibAPNG.XNA.APNGPipelineExtension.csproj", "{9FC6885B-1347-48EB-B427-34BCF8778483}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibAPNG.XNA.APNGTexture", "LibAPNG.XNA.APNGTexture\LibAPNG.XNA.APNGTexture.csproj", "{1AFB77F4-21AF-4830-82A1-95E9FB683AA6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibAPNG.XNA.APNGTextureProvider", "LibAPNG.XNA.APNGTextureProvider\LibAPNG.XNA.APNGTextureProvider.csproj", "{1AFB77F4-21AF-4830-82A1-95E9FB683AA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibAPNG.XNA.Test.WithPipeline", "LibAPNG.XNA.Test.WithPipeline\LibAPNG.XNA.Test.WithPipeline\LibAPNG.XNA.Test.WithPipeline.csproj", "{183127B8-43E4-4354-BC87-720845739963}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "LibAPNG.XNA.Test.WithPipelineContent", "LibAPNG.XNA.Test.WithPipeline\LibAPNG.XNA.Test.WithPipelineContent\LibAPNG.XNA.Test.WithPipelineContent.contentproj", "{AD4E5B87-F690-4A78-A304-223C5DCC8AB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,6 +84,22 @@ Global
 		{1AFB77F4-21AF-4830-82A1-95E9FB683AA6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1AFB77F4-21AF-4830-82A1-95E9FB683AA6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1AFB77F4-21AF-4830-82A1-95E9FB683AA6}.Release|x86.ActiveCfg = Release|Any CPU
+		{183127B8-43E4-4354-BC87-720845739963}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{183127B8-43E4-4354-BC87-720845739963}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{183127B8-43E4-4354-BC87-720845739963}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{183127B8-43E4-4354-BC87-720845739963}.Debug|x86.ActiveCfg = Debug|x86
+		{183127B8-43E4-4354-BC87-720845739963}.Debug|x86.Build.0 = Debug|x86
+		{183127B8-43E4-4354-BC87-720845739963}.Release|Any CPU.ActiveCfg = Release|x86
+		{183127B8-43E4-4354-BC87-720845739963}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{183127B8-43E4-4354-BC87-720845739963}.Release|Mixed Platforms.Build.0 = Release|x86
+		{183127B8-43E4-4354-BC87-720845739963}.Release|x86.ActiveCfg = Release|x86
+		{183127B8-43E4-4354-BC87-720845739963}.Release|x86.Build.0 = Release|x86
+		{AD4E5B87-F690-4A78-A304-223C5DCC8AB6}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{AD4E5B87-F690-4A78-A304-223C5DCC8AB6}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{AD4E5B87-F690-4A78-A304-223C5DCC8AB6}.Debug|x86.ActiveCfg = Debug|x86
+		{AD4E5B87-F690-4A78-A304-223C5DCC8AB6}.Release|Any CPU.ActiveCfg = Release|x86
+		{AD4E5B87-F690-4A78-A304-223C5DCC8AB6}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{AD4E5B87-F690-4A78-A304-223C5DCC8AB6}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

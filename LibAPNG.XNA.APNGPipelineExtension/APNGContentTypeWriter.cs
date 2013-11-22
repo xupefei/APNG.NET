@@ -19,7 +19,7 @@ namespace LibAPNG.XNA.APNGPipelineExtension
 
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            return "LibAPNG.XNA.APNGContentTypeReader,LibAPNG.XNA";
+            return "LibAPNG.XNA.APNGTextureProvider.APNGContentTypeReader,LibAPNG.XNA.APNGTextureProvider";
         }
     }
 }
