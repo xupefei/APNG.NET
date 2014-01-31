@@ -49,6 +49,7 @@
     <Compile Include="Chunks\IENDChunk.cs" />
     <Compile Include="Chunks\IHDRChunk.cs" />
     <Compile Include="Chunks\fcTLChunk.cs" />
+    <Compile Include="Chunks\OtherChunk.cs" />
     <Compile Include="CrcHelper.cs" />
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="APNG.cs" />

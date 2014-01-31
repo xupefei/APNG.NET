@@ -11,6 +11,7 @@ namespace LibAPNG
         public static byte[] Signature = new byte[] {0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A};
 
         private List<IDATChunk> idatChunks = new List<IDATChunk>();
+        private List<OtherChunk> otherChunks = new List<OtherChunk>();
 
         /// <summary>
         /// Gets or Sets the acTL chunk
@@ -28,12 +29,29 @@ namespace LibAPNG
         public IENDChunk IENDChunk { get; set; }
 
         /// <summary>
+        /// Gets or Sets the other chunks
+        /// </summary>
+        public List<OtherChunk> OtherChunks
+        {
+            get { return otherChunks; }
+            set { otherChunks = value; }
+        }
+
+        /// <summary>
         /// Gets or Sets the IDAT chunks
         /// </summary>
         public List<IDATChunk> IDATChunks
         {
             get { return idatChunks; }
             set { idatChunks = value; }
+        }
+
+        /// <summary>
+        /// Add an Chunk to end end of existing list.
+        /// </summary>
+        public void AddOtherChunk(OtherChunk chunk)
+        {
+            otherChunks.Add(chunk);
         }
 
         /// <summary>
@@ -62,9 +80,8 @@ namespace LibAPNG
             {
                 ms.WriteBytes(Signature);
                 ms.WriteBytes(ihdrChunk.RawData);
-
-                foreach (IDATChunk idatChunk in idatChunks)
-                    ms.WriteBytes(idatChunk.RawData);
+                otherChunks.ForEach(o => ms.WriteBytes(o.RawData));
+                idatChunks.ForEach(i => ms.WriteBytes(i.RawData));
                 ms.WriteBytes(IENDChunk.RawData);
 
                 ms.Position = 0;

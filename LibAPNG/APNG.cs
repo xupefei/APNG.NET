@@ -31,6 +31,7 @@ namespace LibAPNG
             // Now let's loop in chunks
             Chunk chunk;
             Frame frame = null;
+            var otherChunks = new List<OtherChunk>();
             bool isIDATAlreadyParsed = false;
             do
             {
@@ -116,7 +117,7 @@ namespace LibAPNG
                         break;
 
                     default:
-                        //TODO: Handle other chunks.
+                        otherChunks.Add(new OtherChunk(chunk));
                         break;
                 }
             } while (chunk.ChunkType != "IEND");
@@ -129,6 +130,9 @@ namespace LibAPNG
                 frames.Insert(0, defaultImage);
                 DefaultImageIsAnimeated = true;
             }
+
+            // Now we should apply every chunk in otherChunks to every frame.
+            frames.ForEach(f => otherChunks.ForEach(f.AddOtherChunk));
         }
 
         /// <summary>
