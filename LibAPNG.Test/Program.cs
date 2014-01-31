@@ -16,7 +16,7 @@ namespace LibAPNG.Test
             }
             var apng = new APNG(args[0]);
 
-            if (!apng.DefaultImageIsAnimeated)
+            if (!apng.DefaultImageIsAnimated)
                 File.WriteAllBytes("0.png", apng.DefaultImage.GetStream().ToArray());
 
             foreach (Frame frame in apng.Frames)

@@ -128,7 +128,7 @@ namespace LibAPNG
             if (defaultImage.fcTLChunk != null)
             {
                 frames.Insert(0, defaultImage);
-                DefaultImageIsAnimeated = true;
+                DefaultImageIsAnimated = true;
             }
 
             // Now we should apply every chunk in otherChunks to every frame.
@@ -143,7 +143,7 @@ namespace LibAPNG
         /// <summary>
         /// Indicate whether the default image is part of the animation
         /// </summary>
-        public bool DefaultImageIsAnimeated { get; private set; }
+        public bool DefaultImageIsAnimated { get; private set; }
 
         /// <summary>
         /// Gets the base image.
