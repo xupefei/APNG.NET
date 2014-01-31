@@ -80,10 +80,10 @@ namespace LibAPNG
                             if (frame != null)
                                 frames.Add(frame);
                             frame = new Frame
-                                        {
-                                            IHDRChunk = IHDRChunk,
-                                            fcTLChunk = new fcTLChunk(chunk)
-                                        };
+                                    {
+                                        IHDRChunk = IHDRChunk,
+                                        fcTLChunk = new fcTLChunk(chunk)
+                                    };
                         }
                             // Otherwise this fcTL is used by the DEFAULT IMAGE.
                         else
@@ -136,19 +136,19 @@ namespace LibAPNG
         }
 
         /// <summary>
-        /// Indicate whether the file is a simple PNG.
+        ///     Indicate whether the file is a simple PNG.
         /// </summary>
         public bool IsSimplePNG { get; private set; }
 
         /// <summary>
-        /// Indicate whether the default image is part of the animation
+        ///     Indicate whether the default image is part of the animation
         /// </summary>
         public bool DefaultImageIsAnimated { get; private set; }
 
         /// <summary>
-        /// Gets the base image.
-        /// If IsSimplePNG = True, returns the only image;
-        /// if False, returns the default image
+        ///     Gets the base image.
+        ///     If IsSimplePNG = True, returns the only image;
+        ///     if False, returns the default image
         /// </summary>
         public Frame DefaultImage
         {
@@ -156,8 +156,8 @@ namespace LibAPNG
         }
 
         /// <summary>
-        /// Gets the frame array.
-        /// If IsSimplePNG = True, returns empty
+        ///     Gets the frame array.
+        ///     If IsSimplePNG = True, returns empty
         /// </summary>
         public Frame[] Frames
         {
@@ -165,12 +165,12 @@ namespace LibAPNG
         }
 
         /// <summary>
-        /// Gets the IHDR Chunk
+        ///     Gets the IHDR Chunk
         /// </summary>
         public IHDRChunk IHDRChunk { get; private set; }
 
         /// <summary>
-        /// Gets the acTL Chunk
+        ///     Gets the acTL Chunk
         /// </summary>
         public acTLChunk acTLChunk { get; private set; }
     }

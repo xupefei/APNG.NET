@@ -4,32 +4,32 @@ using System.IO;
 namespace LibAPNG
 {
     /// <summary>
-    /// Describe a single frame.
+    ///     Describe a single frame.
     /// </summary>
     public class Frame
     {
-        public static byte[] Signature = new byte[] {0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A};
+        public static byte[] Signature = {0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A};
 
         private List<IDATChunk> idatChunks = new List<IDATChunk>();
         private List<OtherChunk> otherChunks = new List<OtherChunk>();
 
         /// <summary>
-        /// Gets or Sets the acTL chunk
+        ///     Gets or Sets the acTL chunk
         /// </summary>
         public IHDRChunk IHDRChunk { get; set; }
 
         /// <summary>
-        /// Gets or Sets the fcTL chunk
+        ///     Gets or Sets the fcTL chunk
         /// </summary>
         public fcTLChunk fcTLChunk { get; set; }
 
         /// <summary>
-        /// Gets or Sets the IEND chunk
+        ///     Gets or Sets the IEND chunk
         /// </summary>
         public IENDChunk IENDChunk { get; set; }
 
         /// <summary>
-        /// Gets or Sets the other chunks
+        ///     Gets or Sets the other chunks
         /// </summary>
         public List<OtherChunk> OtherChunks
         {
@@ -38,7 +38,7 @@ namespace LibAPNG
         }
 
         /// <summary>
-        /// Gets or Sets the IDAT chunks
+        ///     Gets or Sets the IDAT chunks
         /// </summary>
         public List<IDATChunk> IDATChunks
         {
@@ -47,7 +47,7 @@ namespace LibAPNG
         }
 
         /// <summary>
-        /// Add an Chunk to end end of existing list.
+        ///     Add an Chunk to end end of existing list.
         /// </summary>
         public void AddOtherChunk(OtherChunk chunk)
         {
@@ -55,7 +55,7 @@ namespace LibAPNG
         }
 
         /// <summary>
-        /// Add an IDAT Chunk to end end of existing list.
+        ///     Add an IDAT Chunk to end end of existing list.
         /// </summary>
         public void AddIDATChunk(IDATChunk chunk)
         {
@@ -63,7 +63,7 @@ namespace LibAPNG
         }
 
         /// <summary>
-        /// Gets the frame as PNG FileStream.
+        ///     Gets the frame as PNG FileStream.
         /// </summary>
         public MemoryStream GetStream()
         {

@@ -19,7 +19,7 @@ namespace LibAPNG
             var ms = new MemoryStream(bytes);
             Length = Helper.ConvertEndian(ms.ReadUInt32());
             ChunkType = Encoding.ASCII.GetString(ms.ReadBytes(4));
-            ChunkData = ms.ReadBytes((int) Length);
+            ChunkData = ms.ReadBytes((int)Length);
             Crc = Helper.ConvertEndian(ms.ReadUInt32());
 
             if (ms.Position != ms.Length)
@@ -34,7 +34,7 @@ namespace LibAPNG
         {
             Length = Helper.ConvertEndian(ms.ReadUInt32());
             ChunkType = Encoding.ASCII.GetString(ms.ReadBytes(4));
-            ChunkData = ms.ReadBytes((int) Length);
+            ChunkData = ms.ReadBytes((int)Length);
             Crc = Helper.ConvertEndian(ms.ReadUInt32());
 
             ParseData(new MemoryStream(ChunkData));
@@ -59,7 +59,7 @@ namespace LibAPNG
         public uint Crc { get; set; }
 
         /// <summary>
-        /// Get raw data of the chunk
+        ///     Get raw data of the chunk
         /// </summary>
         public byte[] RawData
         {
@@ -76,7 +76,7 @@ namespace LibAPNG
         }
 
         /// <summary>
-        /// Modify the ChunkData part.
+        ///     Modify the ChunkData part.
         /// </summary>
         public void ModifyChunkData(int postion, byte[] newData)
         {
@@ -92,7 +92,7 @@ namespace LibAPNG
         }
 
         /// <summary>
-        /// Modify the ChunkData part.
+        ///     Modify the ChunkData part.
         /// </summary>
         public void ModifyChunkData(int postion, uint newData)
         {

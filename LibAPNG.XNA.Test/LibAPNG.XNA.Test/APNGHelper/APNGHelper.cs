@@ -29,7 +29,7 @@ namespace LibAPNGTest.APNGHelper
             this.game = game;
 
             var image = new APNG(pngFile);
-            numPlays = (int) image.acTLChunk.NumPlays;
+            numPlays = (int)image.acTLChunk.NumPlays;
             baseFrame = new APNGFrame(game, image.DefaultImage);
 
             if (image.IsSimplePNG)
@@ -38,7 +38,7 @@ namespace LibAPNGTest.APNGHelper
             }
             else
             {
-                numPlays = (int) image.acTLChunk.NumPlays;
+                numPlays = (int)image.acTLChunk.NumPlays;
 
                 foreach (Frame frame in image.Frames)
                 {
@@ -102,7 +102,9 @@ namespace LibAPNGTest.APNGHelper
             for (int crtIndex = 0; crtIndex < frameList.Count; crtIndex++)
             {
                 var currentTexture = new RenderTarget2D(
-                    game.GraphicsDevice, baseFrame.Width, baseFrame.Height);
+                    game.GraphicsDevice,
+                    baseFrame.Width,
+                    baseFrame.Height);
 
                 game.GraphicsDevice.SetRenderTarget(currentTexture);
                 game.GraphicsDevice.Clear(Color.Transparent);
@@ -132,9 +134,9 @@ namespace LibAPNGTest.APNGHelper
                         var t2 = new Texture2D(game.GraphicsDevice, 1, 1);
                         sb.Begin(SpriteSortMode.Deferred, BlendState.Opaque);
                         sb.Draw(
-                            t2,
-                            new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
-                            Color.White);
+                                t2,
+                                new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
+                                Color.White);
                         sb.End();
                         break;
 
@@ -151,10 +153,10 @@ namespace LibAPNGTest.APNGHelper
 
                         sb.Begin(SpriteSortMode.Deferred, BlendState.Opaque);
                         sb.Draw(
-                            prevFrame.FrameTexture,
-                            new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
-                            new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
-                            Color.White);
+                                prevFrame.FrameTexture,
+                                new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
+                                new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
+                                Color.White);
                         sb.End();
                         break;
                 }
@@ -178,9 +180,9 @@ namespace LibAPNGTest.APNGHelper
                     case BlendOps.APNGBlendOpSource:
                         sb.Begin(SpriteSortMode.Deferred, BlendState.Opaque);
                         sb.Draw(
-                            crtFrame.FrameTexture,
-                            new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
-                            Color.White);
+                                crtFrame.FrameTexture,
+                                new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
+                                Color.White);
                         sb.End();
                         break;
 
@@ -188,9 +190,9 @@ namespace LibAPNGTest.APNGHelper
                     case BlendOps.APNGBlendOpOver:
                         sb.Begin();
                         sb.Draw(
-                            crtFrame.FrameTexture,
-                            new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
-                            Color.White);
+                                crtFrame.FrameTexture,
+                                new Rectangle(crtFrame.X, crtFrame.Y, crtFrame.Width, crtFrame.Height),
+                                Color.White);
                         sb.End();
                         break;
                 }

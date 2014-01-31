@@ -22,7 +22,8 @@ namespace LibAPNG.Test
             foreach (Frame frame in apng.Frames)
             {
                 File.WriteAllBytes(
-                    frame.fcTLChunk.SequenceNumber.ToString() + ".png", frame.GetStream().ToArray());
+                                   frame.fcTLChunk.SequenceNumber + ".png",
+                                   frame.GetStream().ToArray());
             }
         }
     }

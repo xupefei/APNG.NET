@@ -20,7 +20,7 @@ namespace LibAPNG
 
         public static char PeekChar(this Stream ms)
         {
-            return PeekChar(ms, (int) ms.Position);
+            return PeekChar(ms, (int)ms.Position);
         }
 
         public static char PeekChar(this Stream ms, int position)
@@ -30,7 +30,7 @@ namespace LibAPNG
 
         public static Int16 PeekInt16(this Stream ms)
         {
-            return PeekInt16(ms, (int) ms.Position);
+            return PeekInt16(ms, (int)ms.Position);
         }
 
         public static Int16 PeekInt16(this Stream ms, int position)
@@ -40,7 +40,7 @@ namespace LibAPNG
 
         public static Int32 PeekInt32(this Stream ms)
         {
-            return PeekInt32(ms, (int) ms.Position);
+            return PeekInt32(ms, (int)ms.Position);
         }
 
         public static Int32 PeekInt32(this Stream ms, int position)
@@ -50,7 +50,7 @@ namespace LibAPNG
 
         public static Int64 PeekInt64(this Stream ms)
         {
-            return PeekInt64(ms, (int) ms.Position);
+            return PeekInt64(ms, (int)ms.Position);
         }
 
         public static Int64 PeekInt64(this Stream ms, int position)
@@ -60,7 +60,7 @@ namespace LibAPNG
 
         public static UInt16 PeekUInt16(this Stream ms)
         {
-            return PeekUInt16(ms, (int) ms.Position);
+            return PeekUInt16(ms, (int)ms.Position);
         }
 
         public static UInt16 PeekUInt16(this Stream ms, int position)
@@ -70,7 +70,7 @@ namespace LibAPNG
 
         public static UInt32 PeekUInt32(this Stream ms)
         {
-            return PeekUInt32(ms, (int) ms.Position);
+            return PeekUInt32(ms, (int)ms.Position);
         }
 
         public static UInt32 PeekUInt32(this Stream ms, int position)
@@ -80,7 +80,7 @@ namespace LibAPNG
 
         public static UInt64 PeekUInt64(this Stream ms)
         {
-            return PeekUInt64(ms, (int) ms.Position);
+            return PeekUInt64(ms, (int)ms.Position);
         }
 
         public static UInt64 PeekUInt64(this Stream ms, int position)

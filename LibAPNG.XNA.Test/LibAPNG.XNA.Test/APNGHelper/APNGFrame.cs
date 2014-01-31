@@ -28,14 +28,14 @@ namespace LibAPNGTest.APNGHelper
         {
             if (frame.fcTLChunk != null)
             {
-                X = (int) frame.fcTLChunk.XOffset;
-                Y = (int) frame.fcTLChunk.YOffset;
-                Width = (int) frame.fcTLChunk.Width;
-                Height = (int) frame.fcTLChunk.Height;
+                X = (int)frame.fcTLChunk.XOffset;
+                Y = (int)frame.fcTLChunk.YOffset;
+                Width = (int)frame.fcTLChunk.Width;
+                Height = (int)frame.fcTLChunk.Height;
                 BlendOp = frame.fcTLChunk.BlendOp;
                 DisposeOp = frame.fcTLChunk.DisposeOp;
                 DelayTime = new TimeSpan(
-                    TimeSpan.TicksPerSecond*frame.fcTLChunk.DelayNum/frame.fcTLChunk.DelayDen);
+                    TimeSpan.TicksPerSecond * frame.fcTLChunk.DelayNum / frame.fcTLChunk.DelayDen);
             }
             else
             {
@@ -50,7 +50,8 @@ namespace LibAPNGTest.APNGHelper
 
             // frame.GetStream() is not seekable, so we build a new MemoryStream.
             FrameTexture = Texture2D.FromStream(
-                game.GraphicsDevice, new MemoryStream(frame.GetStream().ToArray()));
+                                                game.GraphicsDevice,
+                                                new MemoryStream(frame.GetStream().ToArray()));
             MultiplyAlpha(FrameTexture);
         }
 
@@ -60,19 +61,19 @@ namespace LibAPNGTest.APNGHelper
 
         private static void MultiplyAlpha(Texture2D ret)
         {
-            var data = new Byte4[ret.Width*ret.Height];
+            var data = new Byte4[ret.Width * ret.Height];
 
             ret.GetData(data);
             for (int i = 0; i < data.Length; i++)
             {
                 Vector4 vec = data[i].ToVector4();
 
-                float alpha = vec.W/255.0f;
-                var a = (int) (vec.W);
-                var r = (int) (alpha*vec.X);
-                var g = (int) (alpha*vec.Y);
-                var b = (int) (alpha*vec.Z);
-                var packed = (uint) ((a << 24) + (b << 16) + (g << 8) + r);
+                float alpha = vec.W / 255.0f;
+                var a = (int)(vec.W);
+                var r = (int)(alpha * vec.X);
+                var g = (int)(alpha * vec.Y);
+                var b = (int)(alpha * vec.Z);
+                var packed = (uint)((a << 24) + (b << 16) + (g << 8) + r);
 
                 data[i].PackedValue = packed;
             }
